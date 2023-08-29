@@ -81,7 +81,7 @@
                       if(isset($fullname)){
                       foreach($fullname as $cnt){
                         $fname = $cnt['firstname']." ".$cnt['midname']." ".$cnt['lastname'];
-                          print"<option value=".json_encode($cnt['id']).">".$fname."</option>";
+                          print"<option value=".json_encode($cnt['rfid']).">".$fname."</option>";
                       }
                       } ?>
                     </select>

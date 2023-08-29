@@ -39,6 +39,15 @@ class Schedule_model extends CI_Model {
             return $result;
         }
     }
+    function select_schedule_tapcard_byID($id) {
+        $this->db->where('staff_id',$id);
+        $qry=$this->db->get('schedule_tbl');
+        if($qry->num_rows()>0)
+        {
+            $result=$qry->result_array();
+            return $result;
+        }
+    }
 
     function delete_schedule($id) {
         $this->db->where('id', $id);

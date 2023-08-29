@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Attendance</title>
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="<?= base_url(); ?>assets/https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
@@ -59,8 +59,10 @@
                               <tr>
                                 <th>No.</th>
                                   <th>Employee Name</th>
-                                  <th>In</th>
-                                  <th>Out</th>
+                                  <th>Morning In</th>
+                                  <th> Morning Out</th>
+                                  <th>Afternoon In</th>
+                                  <th> Afternoon Out</th>
                                   <th>Log Date</th>
                               </tr>
                           </thead>
@@ -78,6 +80,12 @@
                         } ?></td>
                         <td><?php if($cnt['morning_out'] != NULL){ 
                           echo date('h:i A', strtotime($cnt['morning_out']));
+                        } ?></td>
+                        <td><?php if($cnt['afternoon_in'] != NULL){ 
+                          echo date('h:i A', strtotime($cnt['afternoon_in']));
+                        } ?></td>
+                        <td><?php if($cnt['afternoon_out'] != NULL){ 
+                          echo date('h:i A', strtotime($cnt['afternoon_out']));
                         } ?></td>
                         <td><?= $cnt['log_date']; ?></td>
                     </tr>
@@ -185,13 +193,11 @@
           "hideMethod": "fadeOut"
       }
   }
-    function updateDateTime() {
+function updateDateTime() {
     const now = new Date();
-    
     const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = now.toLocaleDateString(undefined, optionsDate);
     document.getElementById('date').textContent = formattedDate;
-
     const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit'};
     const formattedTime = now.toLocaleTimeString(undefined, optionsTime);
     document.getElementById('time').textContent = formattedTime;
@@ -206,9 +212,6 @@ inputField.focus();
 
 inputField.addEventListener('input', () => {
     if (inputField.value.trim() !== '') {
-        const now = new Date();
-        const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit'};
-        const timetoday = now.toLocaleTimeString(undefined,{hour12: false}, optionsTime);
         const id = inputField.value;
         inputField.disabled = true;
         $.ajax({
@@ -216,8 +219,7 @@ inputField.addEventListener('input', () => {
         type: "post",
         dataType: "json",
         data: {
-            id: id,
-            time: timetoday
+            id: id
         },
         success: function(data) {
             if (data.response == "success") {
@@ -232,13 +234,13 @@ inputField.addEventListener('input', () => {
                 window.location.reload();
             }, 1000); 
             } else {
-                document.getElementById('headcard').innerHTML = "RFID NOT REGISTERED";
+                document.getElementById('headcard').innerHTML = "RFID NOT REGISTERED"; //data.errrorrrr lagyan mo 
                 setTimeout(() => {
                 inputField.value = '';
                 inputField.disabled = false;
                 inputField.focus();
                 document.getElementById('headcard').innerHTML = "TAP YOUR CARD";
-            }, 2000); 
+                }, 2000); 
               errorToast(data.message);
             }
         }

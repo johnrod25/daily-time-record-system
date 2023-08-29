@@ -9,7 +9,6 @@
                 <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h3>Manage Report</h3>
-                    <input type="text" name="try" id="tryy">
                 </div>
                 <hr class="hr">
                 <table id="example" class="table table-bordered table-striped table-hover">
@@ -65,24 +64,3 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-<script>
-    // Get a reference to the input field and the function you want to run
-const inputField = document.getElementById('tryy'); // Replace 'yourInputFieldId' with the actual ID of your input 
-inputField.focus();
-const yourFunction = () => {
-    // Your function's code here
-    errorToast('tryyyyy');
-    setTimeout(() => {
-        inputField.value = ''; // Clear the input field after 5 seconds
-    }, 3000); // 5000 milliseconds = 5 seconds
-};
-
-// Add an event listener to the input field for the 'input' event
-inputField.addEventListener('input', () => {
-    if (inputField.value.trim() !== '') {
-        yourFunction();
-    }
-});
-
-</script>
